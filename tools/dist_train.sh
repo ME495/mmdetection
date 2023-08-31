@@ -16,4 +16,5 @@ python -m torch.distributed.launch \
     --master_port=$PORT \
     $(dirname "$0")/train.py \
     $CONFIG \
+    --work-dir ./work_dir/rtmdet_m_hand_det/ \
     --launcher pytorch ${@:3}

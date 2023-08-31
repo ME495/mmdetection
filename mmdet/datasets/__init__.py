@@ -5,6 +5,7 @@ from .base_det_dataset import BaseDetDataset
 from .base_semseg_dataset import BaseSegDataset
 from .base_video_dataset import BaseVideoDataset
 from .cityscapes import CityscapesDataset
+from .hand_det import HandDetDataset
 from .coco import CocoDataset
 from .coco_caption import CocoCaptionDataset
 from .coco_panoptic import CocoPanopticDataset
@@ -30,7 +31,7 @@ from .xml_style import XMLDataset
 from .youtube_vis_dataset import YouTubeVISDataset
 
 __all__ = [
-    'XMLDataset', 'CocoDataset', 'DeepFashionDataset', 'VOCDataset',
+    'XMLDataset', 'HandDetDataset', 'CocoDataset', 'DeepFashionDataset', 'VOCDataset',
     'CityscapesDataset', 'LVISDataset', 'LVISV05Dataset', 'LVISV1Dataset',
     'WIDERFaceDataset', 'get_loading_pipeline', 'CocoPanopticDataset',
     'MultiImageMixDataset', 'OpenImagesDataset', 'OpenImagesChallengeDataset',
