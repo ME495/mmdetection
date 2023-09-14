@@ -12,14 +12,14 @@ from .instaboost import InstaBoost
 from .loading import (FilterAnnotations, InferencerLoader, LoadAnnotations,
                       LoadEmptyAnnotations, LoadImageFromNDArray,
                       LoadMultiChannelImageFromFiles, LoadPanopticAnnotations,
-                      LoadProposals, LoadTrackAnnotations)
+                      LoadProposals, LoadTrackAnnotations, LoadDepthFromNPY)
 from .transforms import (Albu, CachedMixUp, CachedMosaic, CopyPaste, CutOut,
                          Expand, FixScaleResize, FixShapeResize,
                          MinIoURandomCrop, MixUp, Mosaic, Pad,
                          PhotoMetricDistortion, RandomAffine,
                          RandomCenterCropPad, RandomCrop, RandomErasing,
                          RandomFlip, RandomShift, Resize, ResizeShortestEdge,
-                         SegRescale, YOLOXHSVRandomAug)
+                         SegRescale, YOLOXHSVRandomAug, DepthToTripleChannel)
 from .wrappers import MultiBranch, ProposalBroadcaster, RandomOrder
 
 __all__ = [
@@ -37,5 +37,6 @@ __all__ = [
     'LoadEmptyAnnotations', 'RandomOrder', 'CachedMosaic', 'CachedMixUp',
     'FixShapeResize', 'ProposalBroadcaster', 'InferencerLoader',
     'LoadTrackAnnotations', 'BaseFrameSample', 'UniformRefFrameSample',
-    'PackTrackInputs', 'PackReIDInputs', 'FixScaleResize', 'ResizeShortestEdge'
+    'PackTrackInputs', 'PackReIDInputs', 'FixScaleResize', 'ResizeShortestEdge',
+    'DepthToTripleChannel', 'LoadDepthFromNPY'
 ]

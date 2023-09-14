@@ -3853,3 +3853,33 @@ class CachedMixUp(BaseTransform):
         repr_str += f'random_pop={self.random_pop}, '
         repr_str += f'prob={self.prob})'
         return repr_str
+
+
+@TRANSFORMS.register_module()
+class DepthToTripleChannel(BaseTransform):
+    """Convert a depth image to a triple channel image.
+
+    Required Keys:
+
+    - img
+
+    Modified Keys:
+
+    - img
+    """
+    
+    def transform(self, results: dict) -> dict:
+        """Function to convert a depth image to a triple channel image.
+
+        Args:
+            results (dict): Result dict from loading pipeline.
+
+        Returns:
+            dict: Converted results, 'img' key is updated.
+        """
+        img = results['img']
+        results['img'] = np.stack([img, img, img], axis=2)
+        return results
+    
+    def __repr__(self) -> str:
+        return self.__class__.__name__
