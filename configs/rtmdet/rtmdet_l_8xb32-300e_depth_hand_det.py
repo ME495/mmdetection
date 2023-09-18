@@ -57,7 +57,7 @@ model = dict(
         nms_pre=30000,
         min_bbox_size=0,
         score_thr=0.001,
-        nms=dict(type='nms', iou_threshold=0.01),
+        nms=dict(type='nms', iou_threshold=0.65),
         max_per_img=300),
 )
 
