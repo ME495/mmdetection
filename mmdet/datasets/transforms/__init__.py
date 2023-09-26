@@ -19,7 +19,7 @@ from .transforms import (Albu, CachedMixUp, CachedMosaic, CopyPaste, CutOut,
                          PhotoMetricDistortion, RandomAffine,
                          RandomCenterCropPad, RandomCrop, RandomErasing,
                          RandomFlip, RandomShift, Resize, ResizeShortestEdge,
-                         SegRescale, YOLOXHSVRandomAug, DepthToTripleChannel)
+                         SegRescale, YOLOXHSVRandomAug, SignalChannelToTripleChannel, DepthToTripleChannel)
 from .wrappers import MultiBranch, ProposalBroadcaster, RandomOrder
 
 __all__ = [
@@ -38,5 +38,5 @@ __all__ = [
     'FixShapeResize', 'ProposalBroadcaster', 'InferencerLoader',
     'LoadTrackAnnotations', 'BaseFrameSample', 'UniformRefFrameSample',
     'PackTrackInputs', 'PackReIDInputs', 'FixScaleResize', 'ResizeShortestEdge',
-    'DepthToTripleChannel', 'LoadDepthFromNPY'
+    'SignalChannelToTripleChannel', 'DepthToTripleChannel', 'LoadDepthFromNPY'
 ]
