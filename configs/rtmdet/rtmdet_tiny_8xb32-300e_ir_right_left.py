@@ -1,6 +1,6 @@
 _base_ = './rtmdet_s_8xb32-300e_ir_right_left.py'
 
-checkpoint = 'https://download.openmmlab.com/mmdetection/v3.0/rtmdet/cspnext_rsb_pretrain/cspnext-tiny_imagenet_600e.pth'  # noqa
+checkpoint = 'work_dirs/rtmdet_tiny_ir_right_left2/epoch_50.pth'  # noqa
 
 model = dict(
     backbone=dict(
@@ -27,8 +27,8 @@ train_pipeline = [
         ratio_range=(0.5, 2.0),
         keep_ratio=True),
     dict(type='RandomCrop', crop_size=(640, 640)),
-    # dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomFlip', prob=0.),
+    dict(type='YOLOXHSVRandomAug', hue_delta=0., saturation_delta=0.),
+    dict(type='RandomFlip', direction='horizontal', prob=0.5),
     dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
     dict(
         type='CachedMixUp',
@@ -51,8 +51,8 @@ train_pipeline_stage2 = [
         ratio_range=(0.1, 2.0),
         keep_ratio=True),
     dict(type='RandomCrop', crop_size=(640, 640)),
-    # dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomFlip', prob=0.),
+    dict(type='YOLOXHSVRandomAug', hue_delta=0., saturation_delta=0.),
+    dict(type='RandomFlip', direction='horizontal', prob=0.5),
     dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
     dict(type='PackDetInputs')
 ]
@@ -79,8 +79,8 @@ val_dataloader = dict(
     batch_size=64, num_workers=8, dataset=dict(pipeline=test_pipeline))
 test_dataloader = val_dataloader
 
-max_epochs = 50
-stage2_num_epochs = 5
+max_epochs = 20
+stage2_num_epochs = 2
 base_lr = 0.004
 interval = 1
 
@@ -96,13 +96,13 @@ param_scheduler = [
         start_factor=1.0e-5,
         by_epoch=False,
         begin=0,
-        end=200),
+        end=500),
     dict(
         type='MultiStepLR',
         begin=0,
         end=50,
         by_epoch=True,
-        milestones=[25, 40],
+        milestones=[10, 16],
         gamma=0.1)
     # dict(
     #     # use cosine lr from 150 to 300 epoch

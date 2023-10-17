@@ -72,8 +72,8 @@ train_pipeline = [
         ratio_range=(0.1, 2.0),
         keep_ratio=True),
     dict(type='RandomCrop', crop_size=(640, 640)),
-    dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomFlip', prob=0.),
+    dict(type='YOLOXHSVRandomAug', hue_delta=0., saturation_delta=0.),
+    dict(type='RandomFlip', direction='horizontal', prob=0.5),
     dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
     dict(
         type='CachedMixUp',
@@ -94,8 +94,8 @@ train_pipeline_stage2 = [
         ratio_range=(0.1, 2.0),
         keep_ratio=True),
     dict(type='RandomCrop', crop_size=(640, 640)),
-    dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomFlip', prob=0.),
+    dict(type='YOLOXHSVRandomAug', hue_delta=0., saturation_delta=0.),
+    dict(type='RandomFlip', direction='horizontal', prob=0.5),
     dict(type='Pad', size=(640, 640), pad_val=dict(img=(114, 114, 114))),
     dict(type='PackDetInputs')
 ]

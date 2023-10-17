@@ -1,6 +1,4 @@
 # dataset settings
-dataset_type = 'CocoDataset'
-data_root = 'data/ir_right_left/'
 
 metainfo = {
     'classes': ('right', 'left'),
@@ -43,41 +41,109 @@ test_pipeline = [
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
+
+dataset_coco_ir_right_left_train = dict(
+    type='CocoDataset',
+    data_root='data/coco_ir_right_left/',
+    ann_file='train.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    filter_cfg=dict(filter_empty_gt=True, min_size=32),
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_100DOH_ir_train = dict(
+    type='CocoDataset',
+    data_root='data/100DOH_ir/',
+    ann_file='train.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    filter_cfg=dict(filter_empty_gt=True, min_size=32),
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_qiyuan_multi_view_train = dict(
+    type='CocoDataset',
+    data_root='data/qiyuan_multiview_right_left/',
+    ann_file='train.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    filter_cfg=dict(filter_empty_gt=True, min_size=32),
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_qiyuan_ir_right_left_train = dict(
+    type='CocoDataset',
+    data_root='data/qiyuan_ir_right_left/',
+    ann_file='train.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    filter_cfg=dict(filter_empty_gt=True, min_size=32),
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_train = dict(
+    type='CombinedDataset',
+    metainfo=metainfo,
+    datasets=[
+        dataset_coco_ir_right_left_train, 
+        dataset_100DOH_ir_train,
+        dataset_qiyuan_multi_view_train,
+        dataset_qiyuan_ir_right_left_train
+        ],
+    pipeline=train_pipeline,
+    test_mode=False
+)
+
+dataset_qiyuan_multi_view_val = dict(
+    type='CocoDataset',
+    data_root='data/qiyuan_multiview_right_left/',
+    ann_file='val.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    test_mode=True,
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_qiyuan_ir_right_left_val = dict(
+    type='CocoDataset',
+    data_root='data/qiyuan_ir_right_left/',
+    ann_file='val.json',
+    metainfo=metainfo,
+    data_prefix=dict(img=''),
+    test_mode=True,
+    pipeline=[],
+    backend_args=backend_args
+)
+dataset_val = dict(
+    type='CombinedDataset',
+    metainfo=metainfo,
+    datasets=[dataset_qiyuan_multi_view_val],
+    pipeline=test_pipeline,
+    test_mode=True,
+)
+
 train_dataloader = dict(
     batch_size=2,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     batch_sampler=dict(type='AspectRatioBatchSampler'),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='train.json',
-        metainfo=metainfo,
-        data_prefix=dict(img=''),
-        filter_cfg=dict(filter_empty_gt=True, min_size=32),
-        pipeline=train_pipeline,
-        backend_args=backend_args))
+    dataset=dataset_train)
+    # dataset=dataset_coco_ir_right_left_train)
 val_dataloader = dict(
     batch_size=1,
     num_workers=2,
     persistent_workers=True,
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='val.json',
-        metainfo=metainfo,
-        data_prefix=dict(img=''),
-        test_mode=True,
-        pipeline=test_pipeline,
-        backend_args=backend_args))
+    # dataset=dataset_val)
+    dataset=dataset_qiyuan_multi_view_val)
 test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'val.json',
+    ann_file='data/qiyuan_multiview_right_left/val.json',
     metric='bbox',
     format_only=False,
     backend_args=backend_args)
